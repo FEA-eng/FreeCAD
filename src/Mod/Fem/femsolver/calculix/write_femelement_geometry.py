@@ -82,6 +82,19 @@ def write_femelement_geometry(f, ccxwriter):
                         material,
                         section_type
                     )
+                elif beamsec_obj.SectionType == "General":
+                    area = beamsec_obj.GenArea.getValueAs("mm^2").Value
+                    in11 = beamsec_obj.GenIn11.getValueAs("mm^4").Value
+                    in12 = 0
+                    in22 = beamsec_obj.GenIn22.getValueAs("mm^4").Value
+                    k = beamsec_obj.GenK.getValueAs("mm^4").Value
+                    section_type = ", SECTION=GEN"
+                    section_geo = "{:.13G},{:.13G},{:.13G},{:.13G},{:.13G}\n".format(area, in11, 0 , in22, k)
+                    section_def = "*BEAM SECTION, {}{}{}\n".format(
+                        elsetdef,
+                        material,
+                        section_type
+                    )
                 f.write(section_def)
                 f.write(section_geo)
                 f.write(section_nor)

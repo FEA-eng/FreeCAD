@@ -38,7 +38,7 @@ class ElementGeometry1D(base_fempythonobject.BaseFemPythonObject):
     """
 
     Type = "Fem::ElementGeometry1D"
-    known_beam_types = ["Rectangular", "Circular", "Pipe"]
+    known_beam_types = ["Rectangular", "Circular", "Pipe", "General"]
 
     def __init__(self, obj):
         super(ElementGeometry1D, self).__init__(obj)
@@ -76,6 +76,34 @@ class ElementGeometry1D(base_fempythonobject.BaseFemPythonObject):
             "PipeThickness",
             "PipeBeamSection",
             "set thickness of the pipe beam elements"
+        )
+        
+        obj.addProperty(
+            "App::PropertyLength",
+            "GenArea",
+            "GenBeamSection",
+            "set area of the general beam elements"
+        )
+
+        obj.addProperty(
+            "App::PropertyLength",
+            "GenIn11",
+            "GenBeamSection",
+            "set I_11 of the general beam elements"
+        )
+        
+          obj.addProperty(
+            "App::PropertyLength",
+            "GenIn22",
+            "GenBeamSection",
+            "set I_22 of the general beam elements"
+        )
+        
+          obj.addProperty(
+            "App::PropertyLength",
+            "GenK",
+            "GenBeamSection",
+            "set Timoshenko shear coefficient of the general beam elements"
         )
 
         obj.addProperty(

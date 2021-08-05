@@ -81,7 +81,26 @@ class _TaskPanel:
             QtCore.SIGNAL("valueChanged(Base::Quantity)"),
             self.pipe_thickness_changed
         )
-
+        QtCore.QObject.connect(
+            self.parameterWidget.if_gen_area,
+            QtCore.SIGNAL("valueChanged(Base::Quantity)"),
+            self.gen_area_changed
+        )
+            QtCore.QObject.connect(
+            self.parameterWidget.if_gen_in11,
+            QtCore.SIGNAL("valueChanged(Base::Quantity)"),
+            self.gen_in11_changed
+        )
+        QtCore.QObject.connect(
+            self.parameterWidget.if_gen_in22,
+            QtCore.SIGNAL("valueChanged(Base::Quantity)"),
+            self.gen_in22_changed
+        )
+        QtCore.QObject.connect(
+            self.parameterWidget.if_gen_k,
+            QtCore.SIGNAL("valueChanged(Base::Quantity)"),
+            self.gen_k_changed
+        )
         self.parameterWidget.cb_crosssectiontype.addItems(
             element_geometry1D.ElementGeometry1D.known_beam_types
         )
@@ -124,6 +143,10 @@ class _TaskPanel:
         self.CircDiameter = self.obj.CircDiameter
         self.PipeDiameter = self.obj.PipeDiameter
         self.PipeThickness = self.obj.PipeThickness
+        self.GenArea = self.obj.GenArea
+        self.GenIn11 = self.obj.GenIn11
+        self.GenIn22 = self.obj.GenIn22
+        self.GenK = self.obj.GenK
 
     def set_beamsection_props(self):
         self.obj.SectionType = self.SectionType
@@ -132,6 +155,10 @@ class _TaskPanel:
         self.obj.CircDiameter = self.CircDiameter
         self.obj.PipeDiameter = self.PipeDiameter
         self.obj.PipeThickness = self.PipeThickness
+        self.GenArea = self.obj.GenArea
+        self.GenIn11 = self.obj.GenIn11
+        self.GenIn22 = self.obj.GenIn22
+        self.GenK = self.obj.GenK
 
     def updateParameterWidget(self):
         "fills the widgets"
@@ -144,6 +171,10 @@ class _TaskPanel:
         self.parameterWidget.if_circ_diameter.setText(self.CircDiameter.UserString)
         self.parameterWidget.if_pipe_diameter.setText(self.PipeDiameter.UserString)
         self.parameterWidget.if_pipe_thickness.setText(self.PipeThickness.UserString)
+        self.parameterWidget.if_gen_area.setText(self.GenArea.UserString)
+        self.parameterWidget.if_gen_in11.setText(self.GenIn11.UserString)
+        self.parameterWidget.if_gen_in22.setText(self.GenIn22.UserString)
+        self.parameterWidget.if_gen_k.setText(self.GenK.UserString)
 
     def sectiontype_changed(self, index):
         if index < 0:
@@ -166,3 +197,15 @@ class _TaskPanel:
 
     def pipe_thickness_changed(self, base_quantity_value):
         self.PipeThickness = base_quantity_value
+    
+    def gen_area_changed(self, base_quantity_value):
+        self.GenArea = base_quantity_value
+       
+   def gen_in11_changed(self, base_quantity_value):
+        self.GenIn11 = base_quantity_value
+        
+   def gen_in22_changed(self, base_quantity_value):
+        self.GenIn22 = base_quantity_value
+        
+   def gen_k_changed(self, base_quantity_value):
+        self.GenK = base_quantity_value
