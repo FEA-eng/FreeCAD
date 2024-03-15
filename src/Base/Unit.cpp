@@ -557,6 +557,9 @@ QString Unit::getTypeString() const
     if (*this == Unit::Mass) {
         return QString::fromLatin1("Mass");
     }
+    if (*this == Unit::Moment) {
+        return QString::fromLatin1("Moment");
+    }
     if (*this == Unit::Pressure) {
         return QString::fromLatin1("Pressure");
     }
@@ -664,6 +667,7 @@ const Unit Unit::MagneticFieldStrength      (-1,0,0,1);
 const Unit Unit::MagneticFlux               (2,1,-2,-1);
 const Unit Unit::MagneticFluxDensity        (0,1,-2,-1);
 const Unit Unit::Magnetization              (-1,0,0,1);
+const Unit Unit::Moment                     (1,2,-2);
 const Unit Unit::Pressure                   (-1,1,-2);
 const Unit Unit::Power                      (2, 1, -3);
 const Unit Unit::ShearModulus               (-1,1,-2);
