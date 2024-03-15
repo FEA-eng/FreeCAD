@@ -66,9 +66,9 @@ def write_constraint(f, femobj, rb_obj, ccxwriter):
     is_ref_bc_defined = any((rb_obj.xDisplacement,
                              rb_obj.yDisplacement,
                              rb_obj.zDisplacement,
-                             rb_obj.xLoad,
-                             rb_obj.yLoad,
-                             rb_obj.zLoad))
+                             rb_obj.xForce,
+                             rb_obj.yForce,
+                             rb_obj.zForce))
 
     is_rot_bc_defined = any((rb_obj.xRotation,
                              rb_obj.yRotation,
@@ -78,10 +78,14 @@ def write_constraint(f, femobj, rb_obj, ccxwriter):
                              rb_obj.zMoment))
 
     # FIXME: This needs to be implemented
-    ref_node_idx = -1
-    rot_node_idx = -1
+    ref_node_idx = 10000000
+    rot_node_idx = 20000000
 
-    kw_line = "*RIGID BODY,NSET={}".format(rb_obj.Name)
+    f.write("NODE\n")
+    f.write("{},{},{},{}\n".format(ref_node_idx, rb_obj.xRefNode, rb_obj.yRefNode, rb_obj.zRefNode))
+    f.write("{},{},{},{}\n".format(rot_node_idx, rb_obj.xRefNode, rb_obj.yRefNode, rb_obj.zRefNode))
+
+    kw_line = "*RIGID BODY, NSET={}, REF NODE={}, ROT NODE={}".format(rb_obj.Name, ref_node_idx, rot_node_idx)
 
     if is_ref_bc_defined:
         kw_line = kw_line + ",REF NODE={}".format(ref_node_idx)
@@ -91,15 +95,3 @@ def write_constraint(f, femobj, rb_obj, ccxwriter):
 
     f.write(kw_line + "\n")
 
-    # TODO: Displacement definitions need fixing
-    if is_ref_bc_defined:
-        f.write("*CLOAD\n")
-        f.write("{},1,{}\n".format(ref_node_idx, rb_obj.xLoad))
-        f.write("{},2,{}\n".format(ref_node_idx, rb_obj.yLoad))
-        f.write("{},3,{}\n".format(ref_node_idx, rb_obj.zLoad))
-
-    if is_rot_bc_defined:
-        f.write("*CLOAD\n")
-        f.write("{},1,{}\n".format(rot_node_idx, rb_obj.xMoment))
-        f.write("{},2,{}\n".format(rot_node_idx, rb_obj.yMoment))
-        f.write("{},3,{}\n".format(rot_node_idx, rb_obj.zMoment))
